@@ -1,4 +1,4 @@
-from django.urls import include, path, re_path
+from django.urls import include, path
 from rest_framework import routers
 from Books import views
 
@@ -14,5 +14,4 @@ router.register(r'Purchase', views.PurchaseViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    re_path(r'^user/(?P<username>.+)/$', views.UserList.as_view())
 ]

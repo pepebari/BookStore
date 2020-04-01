@@ -28,5 +28,15 @@ Añadir usuario:
 Eliminar registro:
 `curl -X DELETE -u admin http://127.0.0.1:8000/user/1/`
 
-## TODO
-Falta añadir opción para buscar en las diferentes tablas
+Buscar registros:
+Se puede buscar haciendo peticiones a urls de este tipo:  http://127.0.0.1:8000/user/?name=Popeye
+
+Los campos que se pueden usar para busquedas en cada modelo son
+User: *name*
+Genre: *name*
+Stock: *quantity*
+Book: *title*
+Purchase: *userId*, *bookId*
+
+Se pueden hacer busquedas multiples, por ejemplo
+`curl -H 'Accept: application/json; indent=4' -u admin http://127.0.0.1:8000/purchase/?userId=1&bookId=3`

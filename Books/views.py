@@ -1,71 +1,94 @@
-from Books.models import User, Genre, Stock, Book, Purchase
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework import generics
+
+from Books.models import User, Genre, Stock, Book, Purchase
 from Books.serializers import UserSerializer, GenreSerializer, StockSerializer
 from Books.serializers import BookSerializer, PurchaseSerializer
-from django_filters.rest_framework import DjangoFilterBackend
 
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows to view or edit Users.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_backends = [DjangoFilterBackend]
+
     permission_classes = [permissions.IsAuthenticated]
 
-
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    filter_backends = [DjangoFilterBackend]
-
     def get_queryset(self):
-        """
-        This view should return a list of all the purchases for
-        the user as determined by the username portion of the URL.
-        """
-        username = self.kwargs['username']
-        return User.objects.filter(name=username)
+        qs = super(UserViewSet, self).get_queryset()
+        name = self.request.query_params.get('name')
+        if name:
+            qs = qs.filter(name=name)
+        return qs
 
 
 class GenreViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows to view or edit Genres.
     """
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    filter_backends = [DjangoFilterBackend]
+
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super(GenreViewSet, self).get_queryset()
+        name = self.request.query_params.get('name')
+        if name:
+            qs = qs.filter(name=name)
+        return qs
 
 
 class StockViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows to view or edit Stocks.
     """
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
-    filter_backends = [DjangoFilterBackend]
+
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super(StockViewSet, self).get_queryset()
+        quantity = self.request.query_params.get('quantity')
+        if quantity:
+            qs = qs.filter(quantity=quantity)
+        return qs
 
 
 class BookViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows to view or edit Books.
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    filter_backends = [DjangoFilterBackend]
+
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super(BookViewSet, self).get_queryset()
+        title = self.request.query_params.get('title')
+        if title:
+            qs = qs.filter(title=title)
+        return qs
 
 
 class PurchaseViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows to view or edit Purchases.
     """
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
-    filter_backends = [DjangoFilterBackend]
+
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super(PurchaseViewSet, self).get_queryset()
+        userId = self.request.query_params.get('userId')
+        bookId = self.request.query_params.get('bookId')
+        if userId:
+            qs = qs.filter(user__id=userId)
+        if bookId:
+            qs = qs.filter(book__id=bookId)
+        return qs
