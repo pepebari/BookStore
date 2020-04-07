@@ -19,6 +19,7 @@ class Stock(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     quantity = models.ForeignKey(Stock, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=6, decimal_places=2)
