@@ -1,5 +1,9 @@
 # BookStore
-Ejercicio para practicar con Django Rest Framewok
+Ejercicio para practicar con Django Rest Framework
+Base de datos para una libreria con tablas de usuarios, libros, genero, stock y compras
+Para cada compra se incrementa el campo *puntos* del usuario y se reduce el stock del libro de esa compra.
+
+Se ha colgado una instancia de la aplicacion en http://34.211.225.156/ o se puede ejecutar localmente
 
 ## Instalación
 
@@ -16,7 +20,8 @@ Sincronizamos la base de datos y cremaos usuario con permisos
 Ejecutamos el servidor
 `python manage.py runserver`
 
-## Peticiones a la API
+## Peticiones a la API mediante *curl*
+
 Consulta la lista de usuarios:
 `curl -H 'Accept: application/json; indent=4' -u admin http://127.0.0.1:8000/user/`
 Consulta el usuario con id=1:
@@ -31,12 +36,21 @@ Eliminar registro:
 Buscar registros:
 Se puede buscar haciendo peticiones a urls de este tipo:  http://127.0.0.1:8000/user/?name=Popeye
 
-Los campos que se pueden usar para busquedas en cada modelo son
-User: *name*
-Genre: *name*
-Stock: *quantity*
-Book: *title*, *author*
-Purchase: *userId*, *bookId*
+Los campos que se pueden usar para busquedas en cada modelo son:
+- User: *name*
+- Genre: *name*
+- Stock: *quantity*
+- Book: *title*, *author*
+- Purchase: *userId*, *bookId*
 
 Se pueden hacer busquedas multiples, por ejemplo
 `curl -H 'Accept: application/json; indent=4' -u admin http://127.0.0.1:8000/purchase/?userId=1&bookId=3`
+
+
+## Ejemplo de uso en *python*
+
+A modo de ejemplo, hay disponible script populateBooks.py que descarga un [listado de libros](https://gist.githubusercontent.com/jaidevd/23aef12e9bf56c618c41/raw/c05e98672b8d52fa0cb94aad80f75eb78342e5d4/books.csv) y los añade con un stock de 5 unidades.
+Se le puede pedir ayuda mediante
+`./populateBooks.py -h`
+
+
