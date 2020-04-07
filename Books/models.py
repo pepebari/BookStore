@@ -35,4 +35,9 @@ class Purchase(models.Model):
         purchaser.points = purchaser.points+1
         purchaser.save()
 
+        bookPurchased = Book.objects.get(id=self.book.id)
+        stock = Stock.objects.get(id=bookPurchased.quantity.id)
+        stock.quantity = stock.quantity-1
+        stock.save()
+
         super(Purchase, self).save(*args, **kwargs)
