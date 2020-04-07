@@ -35,7 +35,7 @@ Los campos que se pueden usar para busquedas en cada modelo son
 User: *name*
 Genre: *name*
 Stock: *quantity*
-Book: *title*
+Book: *title*, *author*
 Purchase: *userId*, *bookId*
 
 Se pueden hacer busquedas multiples, por ejemplo

@@ -69,8 +69,11 @@ class BookViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qs = super(BookViewSet, self).get_queryset()
         title = self.request.query_params.get('title')
+        author = self.request.query_params.get('author')
         if title:
             qs = qs.filter(title=title)
+        if author:
+            qs = qs.filter(author=author)
         return qs
 
 
